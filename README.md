@@ -1,5 +1,5 @@
 # Minecraft Scripts
-This repo are focus on using program to help type commands in Minecraft to minimize waste time.
+This repo are focus on using program to help type commands in Minecraft to save time.
 
 ## Program and Functionality
 1. Replace Block.py: Automaticly replace designated block as air with WorldEdit.

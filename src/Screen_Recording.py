@@ -1,14 +1,13 @@
-from os import system
+from os import system, startfile
 from time import sleep
 import keyboard
 import mouse
-import pyperclip
 from timeit import default_timer
 system('cls')
 
 
 type_time_interval = 0.1
-recording_buff_length = 5  # seconds
+recording_buff_length = 6  # seconds
 max_recording_length = 0  # 180  # seconds
 
 
@@ -39,10 +38,13 @@ def end(time):
 
 
 def record():
+    '''In Game'''
     input("Start recording.", type_time_interval)
     input("Make sure it's currently in FullScreen Mode.", type_time_interval)
     input("Press 'q' to quit.", type_time_interval)
     sleep(1)
+    input("/gamemode spectator", type_time_interval)
+    keyboard.press_and_release('`')
     keyboard.press_and_release('f1')
     keyboard.press_and_release('alt+f9')
     start = default_timer()
@@ -50,12 +52,16 @@ def record():
         end = default_timer()
         time = end - start
         if time >= recording_buff_length + max_recording_length:
-            input(str(time), type_time_interval)
             break
     keyboard.press_and_release('alt+f9')
-    input("Stop recording.", type_time_interval)
-    input("/data get entity @s Pos", type_time_interval)
     keyboard.press_and_release('f1')
+    keyboard.press_and_release('`')
+    input("Recording time: " + str(time), type_time_interval)
+    input("Stopped recording.", type_time_interval)
+    input("/gamemode creative", type_time_interval)
+    input("/data get entity @s Pos", type_time_interval)
+    '''Show File'''
+    startfile(r'C:/Users/dachu/Videos/Minecraft')
 
     # https://stackoverflow.com/questions/7529991/disable-or-lock-mouse-and-keyboard-in-python
 

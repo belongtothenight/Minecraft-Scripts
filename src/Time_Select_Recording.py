@@ -18,7 +18,7 @@ initial_time = 0
 recording_buff_length = 6  # seconds
 overtime = 20  # seconds
 video_path_file = 'Time_Selection_Recording-video_path.txt'
-video_path = '%USERPROFILE%\\Videos\\Minecraft'
+video_path = r'%USERPROFILE%\Videos\Minecraft'
 
 '''Adjustable Variables'''
 time_interval = 500  # minecraft gametime
@@ -71,7 +71,7 @@ def end():
         video_path = f.read()
         f.close()
     except:
-        video_path = '%USERPROFILE%\\Videos'
+        video_path = r'%USERPROFILE%\Videos'
     startfile(video_path)
     exit()
 

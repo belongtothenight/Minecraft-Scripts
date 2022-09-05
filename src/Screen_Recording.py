@@ -6,8 +6,10 @@ from timeit import default_timer
 system('cls')
 
 
-type_time_interval = 0.1
+'''Default Variables'''
 recording_buff_length = 6  # seconds
+'''Adjustable Variables'''
+type_time_interval = 0.1
 max_recording_length = 0  # 180  # seconds
 
 

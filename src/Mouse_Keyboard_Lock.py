@@ -4,9 +4,9 @@ import keyboard
 import mouse
 from timeit import default_timer
 from ctypes import *
-system('cls')
 
 
+'''Default Variables'''
 type_time_interval = 0.1
 
 

@@ -18,7 +18,7 @@ initial_time = 0
 recording_buff_length = 6  # seconds
 overtime = 20  # seconds
 video_path_file = 'Time_Selection_Recording-video_path.txt'
-video_path = r'%USERPROFILE%\\Videos\\Minecraft'
+video_path = '%USERPROFILE%\\Videos\\Minecraft'
 
 '''Adjustable Variables'''
 time_interval = 500  # minecraft gametime
@@ -59,7 +59,8 @@ def start():
         pass
     input('Start execution.', type_time_interval)
     input('Gameruls need to be set before execution.', type_time_interval)
-    input("Press 'q' to quit.", type_time_interval)
+    input("Press 'shift+q' to quit.", type_time_interval)
+    input("Press 'q' to skip.", type_time_interval)
 
 
 def end():
@@ -70,7 +71,7 @@ def end():
         video_path = f.read()
         f.close()
     except:
-        video_path = r'%USERPROFILE%\\Videos'
+        video_path = '%USERPROFILE%\\Videos'
     startfile(video_path)
     exit()
 
@@ -91,7 +92,6 @@ def switch_time_manual(add, time, interval_time):
     input("Start manual time switching.", type_time_interval)
     input("Press 'n' to advance.", type_time_interval)
     input("Press 'enter' to record video.", type_time_interval)
-    input("Press 'q' to quit.", type_time_interval)
     start = tt()
     while True:
         sleep(loop_time_interval)
@@ -110,14 +110,15 @@ def switch_time_manual(add, time, interval_time):
             input(cmd2, interval_time)
         if keyboard.is_pressed('enter'):
             break
-        if keyboard.is_pressed('q'):
+        if keyboard.is_pressed('shift+q'):
             end()
+        if keyboard.is_pressed('q'):
+            break
 
 
 def switch_time_auto(add, time, interval_time_1, interval_time_2):
     input("Start automatic time switching.", type_time_interval)
     input("Press 'enter' to record video.", type_time_interval)
-    input("Press 'q' to quit.", type_time_interval)
     start1 = tt()
     limit = overtime * (maximum_time / time_interval) * 0.25
     while True:
@@ -141,15 +142,18 @@ def switch_time_auto(add, time, interval_time_1, interval_time_2):
                 break
             if keyboard.is_pressed('enter'):
                 return
-            if keyboard.is_pressed('q'):
+            if keyboard.is_pressed('shift+q'):
                 end()
+            if keyboard.is_pressed('q'):
+                return
 
 
 def time_switch():
     input("Press '1' to switch time manually.", type_time_interval)
     input("Press '2' to switch time automatically.", type_time_interval)
     input("Press 'enter' to record video.", type_time_interval)
-    input("Press 'q' to quit.", type_time_interval)
+    input("Press 'shift+q' to quit.", type_time_interval)
+    input("Press 'q' to skip.", type_time_interval)
     input("Decide filming angle before next step.", type_time_interval)
     start = tt()
     while True:
@@ -165,11 +169,22 @@ def time_switch():
                              type_time_interval, auto_switch_time_interval)
         if keyboard.is_pressed('enter'):
             break
-        if keyboard.is_pressed('q'):
+        if keyboard.is_pressed('shift+q'):
             end()
+        if keyboard.is_pressed('q'):
+            break
 
 
 def record():
+    def start_record():
+        keyboard.press_and_release('`')
+        keyboard.press_and_release('f1')
+        keyboard.press_and_release('alt+f9')
+
+    def stop_record():
+        keyboard.press_and_release('alt+f9')
+        keyboard.press_and_release('f1')
+        keyboard.press_and_release('`')
     if exists(video_path_file):
         pass
     else:
@@ -180,25 +195,21 @@ def record():
     line = "Start recording for {} seconds.".format(max_recording_length)
     input(line, type_time_interval)
     input("Make sure it's currently in FullScreen Mode.", type_time_interval)
-    input("Press 'q' to quit.", type_time_interval)
-    sleep(1)
+    sleep(type_time_interval*10)
     input("/gamemode spectator", type_time_interval)
-    keyboard.press_and_release('`')
-    keyboard.press_and_release('f1')
-    keyboard.press_and_release('alt+f9')
+    start_record()
     start = tt()
     while not keyboard.is_pressed('q'):
         sleep(loop_time_interval)
         end = tt()
         time = end - start
+        if keyboard.is_pressed('shift+q'):
+            stop_record()
+            end()
         if time >= recording_buff_length + max_recording_length:
-            keyboard.press_and_release('alt+f9')
-            keyboard.press_and_release('f1')
-            keyboard.press_and_release('`')
+            stop_record()
             break
-    keyboard.press_and_release('alt+f9')
-    keyboard.press_and_release('f1')
-    keyboard.press_and_release('`')
+    stop_record()
     input("Recording time: " + str(time), type_time_interval)
     input("Stopped recording.", type_time_interval)
     input("/gamemode creative", type_time_interval)
@@ -208,11 +219,11 @@ def record():
 if __name__ == '__main__':
     start()
     clear_hotbar()
-    input("Press 'q' to quit.", type_time_interval)
+    input("Press 'shift+q' to quit.", type_time_interval)
     while True:
         sleep(loop_time_interval)
         time_switch()
         record()
-        if keyboard.is_pressed('q'):
+        if keyboard.is_pressed('shift+q'):
             break
     end()

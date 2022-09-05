@@ -1,5 +1,5 @@
 from time import sleep
-from os import system, startfile
+from os import system, startfile, remove
 from time import sleep
 from time import time as tt
 from sys import exit
@@ -17,6 +17,18 @@ overtime = 20  # seconds
 time_interval = 500  # minecraft gametime
 auto_switch_time_interval = 2  # seconds
 max_recording_length = 180  # seconds (default 180)
+
+
+class runSingle:
+    # https://stackoverflow.com/questions/61219355/prevent-my-python-script-to-be-executed-twice-at-same-time
+    def __init__(self, fileName) -> None:
+        self.f = open(fileName, "w")
+        self.f.close()
+        try:
+            remove(fileName)
+            self.f = open(fileName, "w")
+        except WindowsError:
+            exit()
 
 
 def input(command, time):
@@ -168,6 +180,7 @@ def record():
 
 
 if __name__ == '__main__':
+    a = runSingle("Time_Selection_Recording-single_run_check-safe_to_delete")
     start()
     clear_hotbar()
     input("Press 'q' to quit.", type_time_interval)

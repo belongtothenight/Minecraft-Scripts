@@ -1,2 +1,4 @@
 *.code-workspace
 build/
+src/build/
+src/dist/

@@ -12,7 +12,8 @@ import keyboard
 '''Default Variables'''
 ASADMIN = 'asadmin'
 maximum_time = 24000
-type_time_interval = 0.1
+type_time_interval = 0.1  # to prevent error input to Minecraft
+loop_time_interval = 0.1  # to prevent laggy control and even freeze
 initial_time = 0
 recording_buff_length = 6  # seconds
 overtime = 20  # seconds
@@ -54,6 +55,7 @@ def start():
     keyboard.press_and_release('f3+d')
     input('Press enter to continue.', type_time_interval)
     while not keyboard.is_pressed('enter'):
+        sleep(loop_time_interval)
         pass
     input('Start execution.', type_time_interval)
     input('Gameruls need to be set before execution.', type_time_interval)
@@ -92,6 +94,7 @@ def switch_time_manual(add, time, interval_time):
     input("Press 'q' to quit.", type_time_interval)
     start = tt()
     while True:
+        sleep(loop_time_interval)
         stop = tt()
         if (stop - start) > overtime * (maximum_time / time_interval) * 0.25:
             input("Overtime, exiting.", type_time_interval)
@@ -118,6 +121,7 @@ def switch_time_auto(add, time, interval_time_1, interval_time_2):
     start1 = tt()
     limit = overtime * (maximum_time / time_interval) * 0.25
     while True:
+        sleep(loop_time_interval)
         stop1 = tt()
         if (stop1 - start1) > limit:
             input("Overtime, exiting.", type_time_interval)
@@ -131,6 +135,7 @@ def switch_time_auto(add, time, interval_time_1, interval_time_2):
         input(cmd2, interval_time_1)
         start2 = tt()
         while True:
+            sleep(loop_time_interval)
             stop2 = tt()
             if (stop2 - start2) > interval_time_2:
                 break
@@ -148,6 +153,7 @@ def time_switch():
     input("Decide filming angle before next step.", type_time_interval)
     start = tt()
     while True:
+        sleep(loop_time_interval)
         stop = tt()
         if (stop - start) > overtime:
             input("Overtime, exiting.", type_time_interval)
@@ -182,6 +188,7 @@ def record():
     keyboard.press_and_release('alt+f9')
     start = tt()
     while not keyboard.is_pressed('q'):
+        sleep(loop_time_interval)
         end = tt()
         time = end - start
         if time >= recording_buff_length + max_recording_length:
@@ -203,6 +210,7 @@ if __name__ == '__main__':
     clear_hotbar()
     input("Press 'q' to quit.", type_time_interval)
     while True:
+        sleep(loop_time_interval)
         time_switch()
         record()
         if keyboard.is_pressed('q'):

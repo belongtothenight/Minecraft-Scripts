@@ -1,4 +1,5 @@
 *.code-workspace
 build/
+picture/
 src/build/
 src/dist/

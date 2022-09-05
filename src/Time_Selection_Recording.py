@@ -1,9 +1,12 @@
 from time import sleep
 from os import system, startfile, remove
+from os.path import exists
 from time import sleep
 from time import time as tt
 from sys import exit
 import keyboard
+import tkinter as tk
+from tkinter.filedialog import askdirectory
 
 # Switch gametime automatically to get best video
 '''Default Variables'''
@@ -12,6 +15,8 @@ type_time_interval = 0.1
 initial_time = 0
 recording_buff_length = 6  # seconds
 overtime = 20  # seconds
+video_path_file = 'Time_Selection_Recording-video_path.txt'
+video_path = r'C:'
 
 '''Adjustable Variables'''
 time_interval = 500  # minecraft gametime
@@ -45,10 +50,8 @@ def start():
     sleep(3)
     keyboard.press_and_release('f3+d')
     input('Press enter to continue.', type_time_interval)
-    while True:
-        event = keyboard.read_event()
-        if event.event_type == 'down' and event.name == 'enter':
-            break
+    while not keyboard.is_pressed('enter'):
+        pass
     input('Start execution.', type_time_interval)
     input('Gameruls need to be set before execution.', type_time_interval)
     input("Press 'q' to quit.", type_time_interval)
@@ -57,7 +60,10 @@ def start():
 def end():
     input('/kill @e[type=item]', type_time_interval)
     input('Finished execution.', type_time_interval)
-    startfile(r'C:/Users/dachu/Videos/Minecraft')
+    f = open(video_path_file, 'r', encoding='utf-8')
+    video_path = f.read()
+    f.close()
+    startfile(video_path)
     exit()
 
 
@@ -152,6 +158,13 @@ def time_switch():
 
 
 def record():
+    if exists(video_path_file):
+        pass
+    else:
+        video_path = askdirectory()
+        f = open(video_path_file, 'w', encoding='utf-8')
+        f.write(video_path)
+        f.close()
     line = "Start recording for {} seconds.".format(max_recording_length)
     input(line, type_time_interval)
     input("Make sure it's currently in FullScreen Mode.", type_time_interval)

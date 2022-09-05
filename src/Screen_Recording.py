@@ -8,6 +8,8 @@ system('cls')
 
 '''Default Variables'''
 recording_buff_length = 6  # seconds
+video_path = r'C:/'  # put your desire video path here
+
 '''Adjustable Variables'''
 type_time_interval = 0.1
 max_recording_length = 0  # 180  # seconds
@@ -63,7 +65,7 @@ def record():
     input("/gamemode creative", type_time_interval)
     input("/data get entity @s Pos", type_time_interval)
     '''Show File'''
-    startfile(r'C:/Users/dachu/Videos/Minecraft')
+    startfile(video_path)
 
     # https://stackoverflow.com/questions/7529991/disable-or-lock-mouse-and-keyboard-in-python
 

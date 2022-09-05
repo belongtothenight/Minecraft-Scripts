@@ -1,22 +1,23 @@
 from time import sleep
 from os import system, startfile, remove
-from os.path import exists
+from os.path import exists, abspath
 from time import sleep
 from time import time as tt
-from sys import exit
-import keyboard
-import tkinter as tk
+from sys import exit, argv
 from tkinter.filedialog import askdirectory
+import win32comext.shell.shell as shell
+import keyboard
 
 # Switch gametime automatically to get best video
 '''Default Variables'''
+ASADMIN = 'asadmin'
 maximum_time = 24000
 type_time_interval = 0.1
 initial_time = 0
 recording_buff_length = 6  # seconds
 overtime = 20  # seconds
 video_path_file = 'Time_Selection_Recording-video_path.txt'
-video_path = r'C:'
+video_path = r'%USERPROFILE%\\Videos\\Minecraft'
 
 '''Adjustable Variables'''
 time_interval = 500  # minecraft gametime
@@ -27,7 +28,8 @@ max_recording_length = 180  # seconds (default 180)
 class runSingle:
     # https://stackoverflow.com/questions/61219355/prevent-my-python-script-to-be-executed-twice-at-same-time
     def __init__(self, fileName) -> None:
-        self.f = open(fileName, "w")
+        with open(fileName, "w") as self.f:
+            pass
         self.f.close()
         try:
             remove(fileName)
@@ -46,6 +48,7 @@ def input(command, time):
 
 
 def start():
+    a = runSingle("Time_Selection_Recording-single_run_check-safe_to_delete")
     system('cls')
     sleep(3)
     keyboard.press_and_release('f3+d')
@@ -60,9 +63,12 @@ def start():
 def end():
     input('/kill @e[type=item]', type_time_interval)
     input('Finished execution.', type_time_interval)
-    f = open(video_path_file, 'r', encoding='utf-8')
-    video_path = f.read()
-    f.close()
+    try:
+        f = open(video_path_file, 'r', encoding='utf-8')
+        video_path = f.read()
+        f.close()
+    except:
+        video_path = r'%USERPROFILE%\\Videos'
     startfile(video_path)
     exit()
 
@@ -193,7 +199,6 @@ def record():
 
 
 if __name__ == '__main__':
-    a = runSingle("Time_Selection_Recording-single_run_check-safe_to_delete")
     start()
     clear_hotbar()
     input("Press 'q' to quit.", type_time_interval)

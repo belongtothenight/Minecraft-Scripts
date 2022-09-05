@@ -154,6 +154,9 @@ def record():
         end = tt()
         time = end - start
         if time >= recording_buff_length + max_recording_length:
+            keyboard.press_and_release('alt+f9')
+            keyboard.press_and_release('f1')
+            keyboard.press_and_release('`')
             break
     keyboard.press_and_release('alt+f9')
     keyboard.press_and_release('f1')
@@ -167,10 +170,10 @@ def record():
 if __name__ == '__main__':
     start()
     clear_hotbar()
-    input("Press 'shift+q' to quit.", type_time_interval)
+    input("Press 'q' to quit.", type_time_interval)
     while True:
         time_switch()
         record()
-        if keyboard.is_pressed('shift+q'):
+        if keyboard.is_pressed('q'):
             break
     end()

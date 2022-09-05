@@ -90,10 +90,14 @@ def switch_time_auto(add, time, interval_time_1, interval_time_2):
     input("Start automatic time switching.", type_time_interval)
     input("Press 'enter' to record video.", type_time_interval)
     input("Press 'q' to quit.", type_time_interval)
-    start = tt()
+    start1 = tt()
+    limit = overtime * (maximum_time / time_interval) * 0.25
+    input(str(start), type_time_interval)
+    input(str(limit), type_time_interval)
     while True:
-        stop = tt()
-        if (stop - start) > overtime * (maximum_time / time_interval) * 0.25:
+        stop1 = tt()
+        input(str(stop1-start1), type_time_interval)
+        if (stop1 - start1) > limit:
             input("Overtime, exiting.", type_time_interval)
             end()
         time += add
@@ -103,10 +107,10 @@ def switch_time_auto(add, time, interval_time_1, interval_time_2):
         cmd2 = '/time set ' + str(time)
         input(cmd1, interval_time_1)
         input(cmd2, interval_time_1)
-        start = time()
+        start2 = tt()
         while True:
-            stop = time()
-            if (stop - start) > interval_time_2:
+            stop2 = tt()
+            if (stop2 - start2) > interval_time_2:
                 break
             if keyboard.is_pressed('enter'):
                 return
@@ -165,9 +169,10 @@ def record():
 if __name__ == '__main__':
     start()
     clear_hotbar()
+    input("Press 'shift+q' to quit.", type_time_interval)
     while True:
         time_switch()
         record()
-        if keyboard.is_pressed('q'):
+        if keyboard.is_pressed('shift+q'):
             break
     end()

@@ -2,6 +2,7 @@ from time import sleep
 from os import system, startfile
 from time import sleep
 from time import time as tt
+from sys import exit
 import keyboard
 
 # Switch gametime automatically to get best video
@@ -92,11 +93,8 @@ def switch_time_auto(add, time, interval_time_1, interval_time_2):
     input("Press 'q' to quit.", type_time_interval)
     start1 = tt()
     limit = overtime * (maximum_time / time_interval) * 0.25
-    input(str(start), type_time_interval)
-    input(str(limit), type_time_interval)
     while True:
         stop1 = tt()
-        input(str(stop1-start1), type_time_interval)
         if (stop1 - start1) > limit:
             input("Overtime, exiting.", type_time_interval)
             end()

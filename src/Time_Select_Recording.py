@@ -5,7 +5,6 @@ from time import sleep
 from time import time as tt
 from sys import exit, argv
 from tkinter.filedialog import askdirectory
-import win32comext.shell.shell as shell
 import keyboard
 
 # Switch gametime automatically to get best video

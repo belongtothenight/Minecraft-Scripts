@@ -1,3 +1,4 @@
+from multiprocessing.resource_sharer import stop
 from time import sleep
 from os import system, startfile, remove
 from os.path import exists, abspath
@@ -11,15 +12,15 @@ import keyboard
 '''Default Variables'''
 ASADMIN = 'asadmin'
 maximum_time = 24000
-type_time_interval = 0.1  # to prevent error input to Minecraft
-loop_time_interval = 0.1  # to prevent laggy control and even freeze
 initial_time = 0
-recording_buff_length = 6  # seconds
-overtime = 20  # seconds
 video_path_file = 'Time_Selection_Recording-video_path.txt'
 video_path = r'%USERPROFILE%\Videos\Minecraft'
 
 '''Adjustable Variables'''
+type_time_interval = 0.1  # to prevent error input to Minecraft
+loop_time_interval = 0.1  # to prevent laggy control and even freeze
+recording_buff_length = 6  # seconds
+overtime = 60  # seconds
 time_interval = 500  # minecraft gametime
 auto_switch_time_interval = 2  # seconds
 max_recording_length = 180  # seconds (default 180)
@@ -72,6 +73,7 @@ def end():
     except:
         video_path = r'%USERPROFILE%\Videos'
     startfile(video_path)
+    # system('cmd /k')
     exit()
 
 
@@ -95,12 +97,12 @@ def switch_time_manual(add, time, interval_time):
     while True:
         sleep(loop_time_interval)
         stop = tt()
-        if (stop - start) > overtime * (maximum_time / time_interval) * 0.25:
+        if (stop - start) > overtime * (maximum_time / time_interval):
+            del start, stop
             input("Overtime, exiting.", type_time_interval)
             end()
         if keyboard.is_pressed('n'):
             time += add
-            print(time)
             if time > maximum_time:
                 time = time - maximum_time
             cmd1 = 'gametime set ' + str(time)
@@ -119,11 +121,12 @@ def switch_time_auto(add, time, interval_time_1, interval_time_2):
     input("Start automatic time switching.", type_time_interval)
     input("Press 'enter' to record video.", type_time_interval)
     start1 = tt()
-    limit = overtime * (maximum_time / time_interval) * 0.25
+    limit = overtime * (maximum_time / time_interval)
     while True:
         sleep(loop_time_interval)
         stop1 = tt()
         if (stop1 - start1) > limit:
+            del start1, stop1
             input("Overtime, exiting.", type_time_interval)
             end()
         time += add
@@ -138,6 +141,7 @@ def switch_time_auto(add, time, interval_time_1, interval_time_2):
             sleep(loop_time_interval)
             stop2 = tt()
             if (stop2 - start2) > interval_time_2:
+                del start2, stop2
                 break
             if keyboard.is_pressed('enter'):
                 return
@@ -159,6 +163,7 @@ def time_switch():
         sleep(loop_time_interval)
         stop = tt()
         if (stop - start) > overtime:
+            del start, stop
             input("Overtime, exiting.", type_time_interval)
             end()
         if keyboard.is_pressed('1'):
@@ -200,14 +205,16 @@ def record():
     start = tt()
     while not keyboard.is_pressed('q'):
         sleep(loop_time_interval)
-        end = tt()
-        time = end - start
+        stop = tt()
+        time = stop - start
         if keyboard.is_pressed('shift+q'):
             stop_record()
+            del start, stop
             end()
         if time >= recording_buff_length + max_recording_length:
             stop_record()
-            break
+            sleep(type_time_interval*20)
+            return
     stop_record()
     input("Recording time: " + str(time), type_time_interval)
     input("Stopped recording.", type_time_interval)

@@ -1,10 +1,10 @@
 from multiprocessing.resource_sharer import stop
 from time import sleep
 from os import system, startfile, remove
-from os.path import exists, abspath
+from os.path import exists
 from time import sleep
 from time import time as tt
-from sys import exit, argv
+from sys import exit
 from tkinter.filedialog import askdirectory
 import keyboard
 
@@ -20,9 +20,9 @@ video_path = r'%USERPROFILE%\Videos\Minecraft'
 type_time_interval = 0.1  # to prevent error input to Minecraft
 loop_time_interval = 0.1  # to prevent laggy control and even freeze
 recording_buff_length = 6  # seconds
-overtime = 60  # seconds
-time_interval = 500  # minecraft gametime
-auto_switch_time_interval = 2  # seconds
+overtime = 120  # seconds
+time_interval = 250  # minecraft gametime
+auto_switch_time_interval = 1.5  # seconds
 max_recording_length = 180  # seconds (default 180)
 
 
@@ -189,6 +189,11 @@ def record():
         keyboard.press_and_release('alt+f9')
         keyboard.press_and_release('f1')
         keyboard.press_and_release('`')
+        sleep(type_time_interval*20)
+        input("Recording time: " + str(time), type_time_interval)
+        input("Stopped recording.", type_time_interval)
+        input("/gamemode creative", type_time_interval)
+        input("/data get entity @s Pos", type_time_interval)
     if exists(video_path_file):
         pass
     else:
@@ -213,13 +218,7 @@ def record():
             end()
         if time >= recording_buff_length + max_recording_length:
             stop_record()
-            sleep(type_time_interval*20)
             return
-    stop_record()
-    input("Recording time: " + str(time), type_time_interval)
-    input("Stopped recording.", type_time_interval)
-    input("/gamemode creative", type_time_interval)
-    input("/data get entity @s Pos", type_time_interval)
 
 
 if __name__ == '__main__':

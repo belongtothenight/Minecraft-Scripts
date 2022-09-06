@@ -13,7 +13,8 @@ import keyboard
 ASADMIN = 'asadmin'
 maximum_time = 24000
 initial_time = 0
-video_path_file = 'Time_Selection_Recording-video_path.txt'
+video_path_file = 'Time_Select_Recording-video_path.txt'
+instance_check_file = 'Time_Select_Recording-single_run_check-safe_to_delete'
 video_path = r'%USERPROFILE%\Videos\Minecraft'
 
 '''Adjustable Variables'''
@@ -49,7 +50,7 @@ def input(command, time):
 
 
 def start():
-    a = runSingle("Time_Selection_Recording-single_run_check-safe_to_delete")
+    a = runSingle(instance_check_file)
     system('cls')
     sleep(3)
     keyboard.press_and_release('f3+d')
@@ -176,7 +177,13 @@ def time_switch():
         if keyboard.is_pressed('shift+q'):
             end()
         if keyboard.is_pressed('q'):
-            break
+            input("Press 'enter' to record video.", type_time_interval)
+            input("Press 'shift+q' to quit.", type_time_interval)
+            while True:
+                if keyboard.is_pressed('enter'):
+                    break
+                if keyboard.is_pressed('shift+q'):
+                    end()
 
 
 def record():

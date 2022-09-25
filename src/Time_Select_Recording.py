@@ -6,6 +6,7 @@ from time import sleep
 from time import time as tt
 from sys import exit
 from tkinter.filedialog import askdirectory
+from pynput.mouse import Controller
 import keyboard
 
 # Switch gametime automatically to get best video
@@ -73,7 +74,10 @@ def end():
         f.close()
     except:
         video_path = r'%USERPROFILE%\Videos'
-    startfile(video_path)
+    try:
+        startfile(video_path)
+    except:
+        pass
     # system('cmd /k')
     exit()
 
@@ -191,6 +195,8 @@ def record():
         keyboard.press_and_release('`')
         keyboard.press_and_release('f1')
         keyboard.press_and_release('alt+f9')
+        mouse = Controller()
+        mouse.scroll(0, -8)
 
     def stop_record():
         keyboard.press_and_release('alt+f9')

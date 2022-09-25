@@ -1,5 +1,7 @@
 # Minecraft Scripts
 
+![Repo Size](https://img.shields.io/github/repo-size/belongtothenight/Minecraft-Scripts) ![Code Size](https://img.shields.io/github/languages/code-size/belongtothenight/Minecraft-Scripts) ![File Count](https://img.shields.io/github/directory-file-count/belongtothenight/Minecraft-Scripts/src) ![Commit Per Month](https://img.shields.io/github/commit-activity/m/belongtothenight/Minecraft-Scripts)
+
 This repo are focus on using program to help type commands in Minecraft to save time.
 All scripts require Minecraft opened, and focus on Minecraft window within 3 seconds after scripts are executed.
 
